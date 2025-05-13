@@ -56,6 +56,13 @@ public class Server extends JFrame implements ActionListener{
 		JLabel phone = new JLabel(i12);
 		phone.setBounds(360, 20, 35, 30);
 		p1.add(phone);
+		
+		ImageIcon i13 = new ImageIcon(ClassLoader.getSystemResource("icons/3icon.png"));
+		Image i14 = i13.getImage().getScaledInstance(10, 25, Image.SCALE_DEFAULT);
+		ImageIcon i15 = new ImageIcon(i14);
+		JLabel more = new JLabel(i15);
+		more.setBounds(420, 20, 10, 25);
+		p1.add(more);
 
 
 
