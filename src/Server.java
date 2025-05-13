@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,6 +64,12 @@ public class Server extends JFrame implements ActionListener{
 		JLabel more = new JLabel(i15);
 		more.setBounds(420, 20, 10, 25);
 		p1.add(more);
+		
+		JLabel name = new JLabel("Dhamu");
+		name.setBounds(110, 15, 100, 18);
+		name.setForeground(Color.white);
+		name.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+		p1.add(name);
 
 
 
