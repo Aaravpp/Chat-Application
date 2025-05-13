@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Server extends JFrame implements ActionListener{
 	
@@ -76,10 +77,20 @@ public class Server extends JFrame implements ActionListener{
 		status.setForeground(Color.white);
 		status.setFont(new Font("SAN_SERIF", Font.BOLD, 13));
 		p1.add(status);
+		
+		JPanel a1 = new JPanel();
+		a1.setBounds(5, 75, 440, 570);
+		add(a1);
+		
+		JTextField text = new JTextField();
+		text.setBounds(5, 655, 310, 40);
+		text.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
+		add(text);
 
 		
-		setSize(450 , 650);
+		setSize(450 , 700);
 		setLocation(200 , 50);
+		setUndecorated(true);
 		getContentPane().setBackground(Color.white);
 		
 		
