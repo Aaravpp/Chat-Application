@@ -50,6 +50,14 @@ public class Server extends JFrame implements ActionListener{
 		video.setBounds(300, 20, 30, 30);
 		p1.add(video);
 		
+		ImageIcon i10 = new ImageIcon(ClassLoader.getSystemResource("icons/phone.png"));
+		Image i11 = i10.getImage().getScaledInstance(35, 30, Image.SCALE_DEFAULT);
+		ImageIcon i12 = new ImageIcon(i11);
+		JLabel phone = new JLabel(i12);
+		phone.setBounds(360, 20, 35, 30);
+		p1.add(phone);
+
+
 
 		
 		setSize(450 , 650);
