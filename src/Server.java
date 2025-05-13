@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -86,6 +87,12 @@ public class Server extends JFrame implements ActionListener{
 		text.setBounds(5, 655, 310, 40);
 		text.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
 		add(text);
+		
+		JButton send = new JButton("Send");
+		send.setBounds(320, 655, 123, 40);
+		send.setBackground(new Color(7 , 94 , 84));
+		send.setForeground(Color.white);
+		add(send);
 
 		
 		setSize(450 , 700);
