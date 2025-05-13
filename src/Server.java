@@ -41,7 +41,15 @@ public class Server extends JFrame implements ActionListener{
 		JLabel profile = new JLabel(i6);
 		profile.setBounds(40, 10, 50, 50);
 		p1.add(profile);
-
+		
+		
+		ImageIcon i7 = new ImageIcon(ClassLoader.getSystemResource("icons/video.png"));
+		Image i8 = i7.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+		ImageIcon i9 = new ImageIcon(i8);
+		JLabel video = new JLabel(i9);
+		video.setBounds(300, 20, 30, 30);
+		p1.add(video);
+		
 
 		
 		setSize(450 , 650);
