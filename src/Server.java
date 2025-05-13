@@ -1,12 +1,16 @@
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Server extends JFrame{
+public class Server extends JFrame implements ActionListener{
 	
 	public Server() {
 		
@@ -24,6 +28,12 @@ public class Server extends JFrame{
 		JLabel back = new JLabel(i3);
 		back.setBounds(5, 20, 25, 25);
 		p1.add(back);
+		
+		back.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				setVisible(false);
+			}
+		});
 
 		
 		setSize(450 , 650);
@@ -38,6 +48,10 @@ public class Server extends JFrame{
 	public static void main(String[] args) {
 		
 		new Server();
+		
+	}
+
+	public void actionPerformed(ActionEvent e) {
 		
 	}
 
