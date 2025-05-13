@@ -70,8 +70,12 @@ public class Server extends JFrame implements ActionListener{
 		name.setForeground(Color.white);
 		name.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
 		p1.add(name);
-
-
+		
+		JLabel status = new JLabel("online");
+		status.setBounds(110, 35, 100, 18);
+		status.setForeground(Color.white);
+		status.setFont(new Font("SAN_SERIF", Font.BOLD, 13));
+		p1.add(status);
 
 		
 		setSize(450 , 650);
