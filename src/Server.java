@@ -31,9 +31,17 @@ public class Server extends JFrame implements ActionListener{
 		
 		back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
+				setVisible(false);    
 			}
 		});
+		
+		ImageIcon i4 = new ImageIcon(ClassLoader.getSystemResource("icons/1.png"));
+		Image i5 = i4.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+		ImageIcon i6 = new ImageIcon(i5);
+		JLabel profile = new JLabel(i6);
+		profile.setBounds(40, 10, 50, 50);
+		p1.add(profile);
+
 
 		
 		setSize(450 , 650);
