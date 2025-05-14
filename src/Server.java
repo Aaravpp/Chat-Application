@@ -9,12 +9,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class Server extends JFrame implements ActionListener{
 	
@@ -125,8 +127,7 @@ public class Server extends JFrame implements ActionListener{
 		
 		JLabel output = new JLabel(out);
 		
-		JPanel p2 = new JPanel();
-		p2.add(output);
+		JPanel p2 = formatLabel(out);
 		
 		a1.setLayout(new BorderLayout());
 		
@@ -143,5 +144,23 @@ public class Server extends JFrame implements ActionListener{
 		
 		
 	}
+	
+	public static JPanel formatLabel(String out) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JLabel output = new JLabel("<html><p style=\"width: 150px\">" + out + "</p><html>");
+		output.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		output.setBackground(new Color(37,211 ,102));
+//		output.setForeground(Color.white);
+		output.setOpaque(true);
+		output.setBorder(new EmptyBorder(15, 15, 15, 50));
+		
+		panel.add(output);
+		
+		return panel;
+		
+	}
+	 
 
 }
