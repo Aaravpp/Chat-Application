@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -6,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Server extends JFrame implements ActionListener{
+	
+	JTextField text;
+	JPanel a1;
+	Box vertical = Box.createVerticalBox();
 	
 	public Server() {
 		
@@ -79,11 +86,11 @@ public class Server extends JFrame implements ActionListener{
 		status.setFont(new Font("SAN_SERIF", Font.BOLD, 13));
 		p1.add(status);
 		
-		JPanel a1 = new JPanel();
+		a1 = new JPanel();
 		a1.setBounds(5, 75, 440, 570);
 		add(a1);
 		
-		JTextField text = new JTextField();
+		text = new JTextField();
 		text.setBounds(5, 655, 310, 40);
 		text.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
 		add(text);
@@ -91,6 +98,7 @@ public class Server extends JFrame implements ActionListener{
 		JButton send = new JButton("Send");
 		send.setBounds(320, 655, 123, 40);
 		send.setBackground(new Color(7 , 94 , 84));
+		send.addActionListener(this);
 		send.setForeground(Color.white);
 		add(send);
 
@@ -112,6 +120,27 @@ public class Server extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		
+		String out = text.getText();
+		
+		JLabel output = new JLabel(out);
+		
+		JPanel p2 = new JPanel();
+		p2.add(output);
+		
+		a1.setLayout(new BorderLayout());
+		
+		JPanel right = new JPanel(new BorderLayout());
+		right.add(p2, BorderLayout.LINE_END);
+		vertical.add(right);  
+		vertical.add(Box.createVerticalStrut(15));
+		
+		a1.add(vertical, BorderLayout.PAGE_START);
+		
+		repaint();
+		invalidate();
+		validate();
+		
 		
 	}
 
