@@ -2,7 +2,6 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -13,9 +12,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.net.*;
+import java.io.*;
+
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -126,47 +127,12 @@ public class Client implements ActionListener{
 		f.setVisible(true);
 		 
 	}
-	
-	public static void main(String[] args) {
-		
-		new Client();
-		
-		try {
-			Socket s = new Socket("127.0.0.1", 6001);
-			DataInputStream din = new DataInputStream(s.getInputStream());
-			dout = new DataOutputStream(s.getOutputStream());
-			
-			while(true) {
-				a1.setLayout(new BorderLayout());
-				String msg = din.readUTF();
-				JPanel panel = formatLabel(msg);
-				
-				JPanel left = new JPanel(new BorderLayout());
-				left.add(panel, BorderLayout.LINE_START);
-				vertical.add(left);
-				
-				vertical.add(Box.createVerticalStrut(15));
-				a1.add(vertical, BorderLayout.PAGE_START);
-								
-				f.validate();
-			}
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 
 	public void actionPerformed(ActionEvent e) {
 		try {
 
 			String out = text.getText();
-		
-			JLabel output = new JLabel(out);
-		
+				
 			JPanel p2 = formatLabel(out);
 		
 			a1.setLayout(new BorderLayout());
@@ -219,6 +185,81 @@ public class Client implements ActionListener{
 		return panel;
 		
 	}
-	 
+
+public static void main(String[] args) {
+		
+		new Client();
+		
+		try {
+			Socket s = new Socket("127.0.0.1", 6001);
+			DataInputStream din = new DataInputStream(s.getInputStream());
+			dout = new DataOutputStream(s.getOutputStream());
+			
+			while(true) {
+				a1.setLayout(new BorderLayout());
+				String msg = din.readUTF();
+				JPanel panel = formatLabel(msg);
+				
+				JPanel left = new JPanel(new BorderLayout());
+				left.add(panel, BorderLayout.LINE_START);
+				vertical.add(left);
+				
+				vertical.add(Box.createVerticalStrut(15));
+				a1.add(vertical, BorderLayout.PAGE_START);
+								
+				f.validate();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }
+
+
+
+
+//import java.io.*;
+//import java.net.*;
+//import java.util.Scanner;
+//
+//public class Client {
+//    private static final String SERVER_ADDRESS = "localhost";
+//    private static final int SERVER_PORT = 12345;
+//
+//    public static void main(String[] args) {
+//        try {
+//            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+//            System.out.println("Connected to the chat server!");
+//
+//            // Setting up input and output streams
+//            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//
+//            // Start a thread to handle incoming messages
+//            new Thread(() -> {
+//                try {
+//                    String serverResponse;
+//                    while ((serverResponse = in.readLine()) != null) {
+//                        System.out.println(serverResponse);
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }).start();
+//
+//            // Read messages from the console and send to the server
+//            Scanner scanner = new Scanner(System.in);
+//            String userInput;
+//            while (true) {
+//                userInput = scanner.nextLine();
+//                out.println(userInput);
+//            }
+//           
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}

@@ -1,3 +1,5 @@
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -9,8 +11,8 @@ import java.awt.event.MouseEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -28,7 +30,7 @@ import javax.swing.border.EmptyBorder;
 public class Server implements ActionListener{
 	
 	JTextField text;
-	JPanel a1;
+	static JPanel a1;
 	static Box vertical = Box.createVerticalBox();
 	static JFrame f = new JFrame(); 
 	static DataOutputStream dout;
@@ -37,7 +39,6 @@ public class Server implements ActionListener{
 		
 		f.setLayout(null);
 		
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel p1 = new JPanel();
 		p1.setBackground(new Color(7,94 ,84));
 		p1.setBounds(0, 0, 450, 70);
@@ -130,27 +131,31 @@ public class Server implements ActionListener{
 		new Server();
 		
 		try {
-			ServerSocket skt = new ServerSocket(6001);
+			Socket s = new Socket("127.0.0.1", 6001);
+			DataInputStream din = new DataInputStream(s.getInputStream());
+			dout = new DataOutputStream(s.getOutputStream());
+			
 			while(true) {
-				Socket s = skt.accept();
-				DataInputStream din = new DataInputStream(s.getInputStream());
-				dout = new DataOutputStream(s.getOutputStream());
+				a1.setLayout(new BorderLayout());
+				String msg = din.readUTF();
+				JPanel panel = formatLabel(msg);
 				
-				while(true) {
-					String msg = din.readUTF();
-					JPanel panel = formatLabel(msg);
-					
-					JPanel left = new JPanel(new BorderLayout());
-					left.add(panel, BorderLayout.LINE_START);
-					vertical.add(left);
-					f.validate();
-				}
+				JPanel left = new JPanel(new BorderLayout());
+				left.add(panel, BorderLayout.LINE_START);
+				vertical.add(left);
+				
+				vertical.add(Box.createVerticalStrut(15));
+				a1.add(vertical, BorderLayout.PAGE_START);
+								
+				f.validate();
 			}
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 	}
 
@@ -173,7 +178,7 @@ public class Server implements ActionListener{
 			a1.add(vertical, BorderLayout.PAGE_START);
 		
 			dout.writeUTF(out);
-
+		
 		
 			text.setText("");
 		
@@ -216,3 +221,109 @@ public class Server implements ActionListener{
 	 
 
 }
+
+
+
+
+//import java.io.*;
+//import java.net.*;
+//import java.util.concurrent.CopyOnWriteArrayList;
+//import java.util.Scanner;
+//
+//public class Server {
+//    private static final int PORT = 12346;
+//    private static CopyOnWriteArrayList<ClientHandler> clients = new CopyOnWriteArrayList<>();
+//
+//    public static void main(String[] args) {
+//        try {
+//            ServerSocket serverSocket = new ServerSocket(PORT);
+//            System.out.println("Server is running and waiting for connections...");
+//
+//            // Thread to handle server admin input
+//            new Thread(() -> {
+//                Scanner scanner = new Scanner(System.in);
+//                while (true) {
+//                    String serverMessage = scanner.nextLine();
+//                    broadcast("[Server]: " + serverMessage, null);
+//                }
+//            }).start();
+//
+//            // Accept incoming connections
+//            while (true) {
+//                Socket clientSocket = serverSocket.accept();
+//                System.out.println("New client connected: " + clientSocket);
+//
+//                // Create a new client handler for the connected client
+//                ClientHandler clientHandler = new ClientHandler(clientSocket);
+//                clients.add(clientHandler);
+//                new Thread(clientHandler).start();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    // Broadcast a message to all clients
+//    public static void broadcast(String message, ClientHandler sender) {
+//        for (ClientHandler client : clients) {
+//            if (client != sender) {
+//                client.sendMessage(message);
+//            }
+//        }
+//    }
+//
+//    // Internal class to handle client connections
+//    private static class ClientHandler implements Runnable {
+//        private Socket clientSocket;
+//        private PrintWriter out;
+//        private BufferedReader in;
+//        private String username;
+//
+//        public ClientHandler(Socket socket) {
+//            this.clientSocket = socket;
+//
+//            try {
+//                out = new PrintWriter(clientSocket.getOutputStream(), true);
+//                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        @Override
+//        public void run() {
+//            try {
+//                // Get the username from the client
+//                out.println("Enter your username:");
+//                username = in.readLine();
+//                System.out.println("User " + username + " connected.");
+//                out.println("Welcome to the chat, " + username + "!");
+//                out.println("Type Your Message");
+//
+//                String inputLine;
+//                while ((inputLine = in.readLine()) != null) {
+//                    System.out.println("[" + username + "]: " + inputLine);
+//                    broadcast("[" + username + "]: " + inputLine, this);
+//                }
+//
+//                // Remove the client handler from the list
+//                clients.remove(this);
+//                System.out.println("User " + username + " disconnected.");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } finally {
+//                try {
+//                    in.close();
+//                    out.close();
+//                    clientSocket.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        public void sendMessage(String message) {
+//            out.println(message);
+//        }
+//    }
+//}
